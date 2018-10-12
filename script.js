@@ -1,8 +1,7 @@
 // JavaScript Document
 
 //Configuration Options
-var digits = 4; //Set the number of digits in the code
-var size = 10; //Set how many options for each digit
+var digits = 8; //Set the number of digits in the code
 
 //Some global variables
 var code = [];
@@ -29,12 +28,16 @@ $(document).ready(function() {
 		alert("!!! IMPORTANT !!!\nThis page relies upon cookies, but it appears that they are not functioning as expected.\nYou could try running it in Firefox\n\nOtherwise, expect some functionality to be broken!\nPROCEED AT YOUR OWN RISK!");
 	}
 	
-	for(var i=0; i < digits; i++){
-		$('#digits').append('<td><select id="digit' + i + '" name="digit' + i + '" class="wrong" title="Enter a value for digit ' + (i+1) + '"></select></td>');
-		for(var j=0; j < size; j++){
-			$('#digit'+i).append('<option value="' + j + '">' + j + '</option>');	
+	//Create the code inptus
+	for(var i=0; i < digits; i++){ //For each of the inputs
+		$('#digits').append('<td><select id="digit' + i + '" name="digit' + i + '" class="wrong" title="Enter a value for digit ' + (i+1) + '"></select></td>'); //Add a blank dropdown to the table
+		for(var j=0; j < 10; j++){ //For each of the numbers
+			$('#digit'+i).append('<option value="' + j + '">' + j + '</option>'); //Add an option to the dropdown
 		}
+		//Then create the feedback labels
+		$('#labels').append('<td id="label' + i + '" class="feedback">&nbsp;</td>');
 	}
+	
 	
 	$('#startbtn').click( function() { start(); }); //Start when the start button is clicked
 
@@ -93,14 +96,14 @@ function initial(){ //Get everything set up
 	clicked = 1;
 	
 	//Pick a random number 
-	var rand = String(Math.round(Math.random()*10000));
-	
+	var rand = String(Math.round(Math.random()*Math.pow(10,digits)));
+	console.log(rand);
 	//Split it into an array
 	code = rand.split("");
 	
 	//Make sure it's the right length, otherwise add leading zeroes
-	if (code.length < 4){ //If the code's less than 4 long
-		while(code.length < 4){ //Keep going 'till it's the right length
+	if (code.length < digits){ //If the code's not long enough
+		while(code.length < digits){ //Keep going 'till it's the right length
 			code.unshift("0"); //Add a zero to the beginning
 		}
 	}	
@@ -137,7 +140,7 @@ function makeGuess(){
 	}
 		
 	//Grab the user's guess
-	for (var i = 0; i < 4; i++){ //Cylce through each of the digits
+	for (var i = 0; i < digits; i++){ //Cylce through each of the digits
 		guess[i] = ($('#digit'+i).val()); //Add each digit of the guess to an array
 		
 		if (code[i] == "*"){ //If it's already matched, ignore it!
@@ -182,7 +185,7 @@ function makeGuess(){
 			}	
 		}
 		
-		if (correct > 3){ //Then, if all the digits have been guessed:
+		if (correct >= digits){ //Then, if all the digits have been guessed:
 			win(); //End the game
 		}
 	}
