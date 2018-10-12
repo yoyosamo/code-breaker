@@ -1,5 +1,9 @@
 // JavaScript Document
 
+//Configuration Options
+var digits = 4; //Set the number of digits in the code
+var size = 10; //Set how many options for each digit
+
 //Some global variables
 var code = [];
 var correct = 0;
@@ -23,6 +27,13 @@ $(document).ready(function() {
 	initial();
 	if(checkCookies() !== true){ //If cookies don't work
 		alert("!!! IMPORTANT !!!\nThis page relies upon cookies, but it appears that they are not functioning as expected.\nYou could try running it in Firefox\n\nOtherwise, expect some functionality to be broken!\nPROCEED AT YOUR OWN RISK!");
+	}
+	
+	for(var i=0; i < digits; i++){
+		$('#digits').append('<td><select id="digit' + i + '" name="digit' + i + '" class="wrong" title="Enter a value for digit ' + (i+1) + '"></select></td>');
+		for(var j=0; j < size; j++){
+			$('#digit'+i).append('<option value="' + j + '">' + j + '</option>');	
+		}
 	}
 	
 	$('#startbtn').click( function() { start(); }); //Start when the start button is clicked
