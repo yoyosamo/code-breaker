@@ -83,8 +83,7 @@ body {
 	width: 300px;
 	height:70px;
 	
-	position: relative;
-	top: -280px;
+	pointer-events: auto;
 	
 	font-size: 30px;
 	
@@ -93,9 +92,10 @@ body {
 .timer {
 	height: 50px;
 	width: 120px;
-	position: relative;
-	top: 20px;
-	left: 130px;
+	
+	margin: auto;
+	margin-top: 40px;
+
 	border-radius: 40px;
 	border: 1px solid black;
 	font-size: 50px;
