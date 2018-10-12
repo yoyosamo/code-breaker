@@ -28,15 +28,7 @@ $(document).ready(function() {
 		alert("!!! IMPORTANT !!!\nThis page relies upon cookies, but it appears that they are not functioning as expected.\nYou could try running it in Firefox\n\nOtherwise, expect some functionality to be broken!\nPROCEED AT YOUR OWN RISK!");
 	}
 	
-	//Create the code inptus
-	for(var i=0; i < digits; i++){ //For each of the inputs
-		$('#digits').append('<td><select id="digit' + i + '" name="digit' + i + '" class="wrong" title="Enter a value for digit ' + (i+1) + '"></select></td>'); //Add a blank dropdown to the table
-		for(var j=0; j < 10; j++){ //For each of the numbers
-			$('#digit'+i).append('<option value="' + j + '">' + j + '</option>'); //Add an option to the dropdown
-		}
-		//Then create the feedback labels
-		$('#labels').append('<td id="label' + i + '" class="feedback">&nbsp;</td>');
-	}
+	
 	
 	
 	$('#startbtn').click( function() { start(); }); //Start when the start button is clicked
@@ -111,13 +103,28 @@ function initial(){ //Get everything set up
 }
 
 function start(){ //To start the game:
+
+	//Create the code inptus
+	for(var i=0; i < digits; i++){ //For each of the inputs
+		$('#digits').append('<td><select id="digit' + i + '" name="digit' + i + '" class="wrong" title="Enter a value for digit ' + (i+1) + '"></select></td>'); //Add a blank dropdown to the table
+		for(var j=0; j < 10; j++){ //For each of the numbers
+			$('#digit'+i).append('<option value="' + j + '">' + j + '</option>'); //Add an option to the dropdown
+		}
+		//Then create the feedback labels
+		$('#labels').append('<td id="label' + i + '" class="feedback">&nbsp;</td>');
+	}
+
+	//Set width of the container div
+	if($("#digits").width() > 400){  //If the container is smaller than the table
+		$("#container").css("width", $("#digits").width()); //Set it to the size of the table
+	}
 	
 	//Enable the options
 	$('.no-click').css({'pointer-events' : 'all',
 						 'cursor' : 'auto'});
 	
 	//Hide the START button
-	$("#startbtn").css('visibility', 'hidden');
+	$("#startbtn").css('display', 'none');
 	
 	//Start the timer
 	countdownInit();
